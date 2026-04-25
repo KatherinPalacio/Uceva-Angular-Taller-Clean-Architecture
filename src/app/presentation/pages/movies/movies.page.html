@@ -1,8 +1,17 @@
-<section class="container mt-4">
-  <h2 class="mb-3">Películas</h2>
 
-  @if (movies$ | async; as movies) {
-    <app-movies-table [movies]="movies" />
-  }
+  @switch(state){
 
-</section>
+    @case('loading'){
+        <app-alert alertState="loading" text="Cargando Películas..." ></app-alert>
+    }
+
+    @case('error'){
+        <app-alert alertState="error" text="Error al Cargar las Películas" ></app-alert>
+    }
+
+    @case('success'){
+        <app-movies-table [movies]="movies" ></app-movies-table>
+    }
+
+}
+

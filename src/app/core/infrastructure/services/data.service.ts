@@ -5,6 +5,8 @@ import { Observable, of } from "rxjs";
 import { environment } from "../../../../environments/environment";
 import { Product, ProductCategory } from "../../domain/models/product.model";
 import { User, UserEngineering } from "../../domain/models/user.model";
+import { Movie } from '../../domain/models/movie.model';
+import { Category } from '../../domain/models/category.model';
 
 /**
  * Servicio de infraestructura para obtención de datos.
@@ -207,12 +209,12 @@ export class DataService {
         return this.httpClient.get<any[]>(`${this.springBootUrl}/categories/${count}`);
     }
 
-    getAllMoviesNode(count: number): Observable<any[]> {
-        return this.httpClient.get<any[]>(`${this.nodeUrl}/movies/${count}`);
+    getAllMoviesNode(count: number): Observable<Movie[]> {
+    return this.httpClient.get<Movie[]>(`${this.nodeUrl}/movies/${count}`);
     }
 
-    getAllCategoriesNode(count: number): Observable<any[]> {
-        return this.httpClient.get<any[]>(`${this.nodeUrl}/categories/${count}`);
+    getAllCategoriesNode(count: number): Observable<Category[]> {
+    return this.httpClient.get<Category[]>(`${this.nodeUrl}/categories/${count}`);
     }
 
 }

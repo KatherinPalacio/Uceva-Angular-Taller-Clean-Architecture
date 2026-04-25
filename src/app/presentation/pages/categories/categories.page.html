@@ -1,8 +1,15 @@
-<section class="container mt-4">
-  <h2 class="mb-3">Categorías</h2>
+@switch(state){
 
-   @if (categories$ | async; as categories) {
-    <app-categories-table [categories]="categories" />
-  }
+    @case('loading'){
+        <app-alert alertState="loading" text="Cargando Categorías..." ></app-alert>
+    }
 
-</section>
+    @case('error'){
+        <app-alert alertState="error" text="Error al Cargar las Categorías" ></app-alert>
+    }
+
+    @case('success'){
+        <app-categories-table [categories]="categories" ></app-categories-table>
+    }
+
+}
