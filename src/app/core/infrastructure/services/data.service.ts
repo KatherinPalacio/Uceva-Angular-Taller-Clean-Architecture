@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { faker } from '@faker-js/faker';
 import { Observable, of } from "rxjs";
+
 import { environment } from "../../../../environments/environment";
 import { Product, ProductCategory } from "../../domain/models/product.model";
 import { User, UserEngineering } from "../../domain/models/user.model";
@@ -18,6 +19,7 @@ import { Category } from '../../domain/models/category.model';
  *
  * - Datos locales simulados (mocks)
  * - Backend Node.js mediante HTTP
+ * - Backend Spring Boot mediante HTTP
  *
  * ❗ No contiene lógica de negocio.
  * ❗ No debe ser consumido directamente por los casos de uso.
@@ -35,6 +37,7 @@ export class DataService {
      * para evitar el uso de constructores explícitos.
      */
     private httpClient = inject(HttpClient);
+
     /**
      * URL base del backend Node.js.
      *
@@ -43,8 +46,9 @@ export class DataService {
      * definida en `environment`.
      */
     private nodeUrl = `${environment.baseUrlNode}/api`;
+
     /**
-     * URL base del backend SpringBoot.
+     * URL base del backend Spring Boot.
      *
      * @remarks
      * Se construye a partir de la configuración de entorno
@@ -52,10 +56,8 @@ export class DataService {
      */
     private springBootUrl = `${environment.baseUrlSpringBoot}/api`;
 
-
     /**
      * Obtiene el listado de USUARIOS desde datos locales simulados.
-     *
      *
      * @param countUsers - Cantidad de usuarios a solicitar
      * @returns Observable que emite un arreglo de {@link User}
@@ -157,7 +159,7 @@ export class DataService {
     }
 
     /**
-     * Obtiene el listado de usuarios desde el backend SpringBoot.
+     * Obtiene el listado de usuarios desde el backend Spring Boot.
      *
      * @remarks
      * Realiza una petición HTTP GET al endpoint
@@ -181,7 +183,7 @@ export class DataService {
     }
 
     /**
-     * Obtiene el listado de productos desde el backend SpringBoot.
+     * Obtiene el listado de productos desde el backend Spring Boot.
      *
      * @remarks
      * Realiza una petición HTTP GET al endpoint
@@ -201,20 +203,87 @@ export class DataService {
         return this.httpClient.get<Product[]>(`${this.springBootUrl}/products/${countProducts}`);
     }
 
-        getAllMoviesSpringBoot(count: number): Observable<any[]> {
-    return this.httpClient.get<any[]>(`${this.springBootUrl}/movies/${count}`);
+    /**
+     * Obtiene el listado de películas desde el backend Spring Boot.
+     *
+     * @remarks
+     * Realiza una petición HTTP GET al endpoint
+     * `/movies/{count}`.
+     *
+     * @param count - Cantidad de películas a solicitar
+     * @returns Observable que emite un arreglo de objetos (formato Spring Boot)
+     *
+     * @example
+     * ```ts
+     * this.dataService.getAllMoviesSpringBoot(5).subscribe(movies => {
+     *   console.log(movies);
+     * });
+     * ```
+     */
+    getAllMoviesSpringBoot(count: number): Observable<any[]> {
+        return this.httpClient.get<any[]>(`${this.springBootUrl}/movies/${count}`);
     }
 
+    /**
+     * Obtiene el listado de categorías desde el backend Spring Boot.
+     *
+     * @remarks
+     * Realiza una petición HTTP GET al endpoint
+     * `/categories/{count}`.
+     *
+     * @param count - Cantidad de categorías a solicitar
+     * @returns Observable que emite un arreglo de objetos (formato Spring Boot)
+     *
+     * @example
+     * ```ts
+     * this.dataService.getAllCategoriesSpringBoot(5).subscribe(categories => {
+     *   console.log(categories);
+     * });
+     * ```
+     */
     getAllCategoriesSpringBoot(count: number): Observable<any[]> {
         return this.httpClient.get<any[]>(`${this.springBootUrl}/categories/${count}`);
     }
 
+    /**
+     * Obtiene el listado de películas desde el backend Node.js.
+     *
+     * @remarks
+     * Realiza una petición HTTP GET al endpoint
+     * `/movies/{count}`.
+     *
+     * @param count - Cantidad de películas a solicitar
+     * @returns Observable que emite un arreglo de {@link Movie}
+     *
+     * @example
+     * ```ts
+     * this.dataService.getAllMoviesNode(5).subscribe(movies => {
+     *   console.log(movies);
+     * });
+     * ```
+     */
     getAllMoviesNode(count: number): Observable<Movie[]> {
-    return this.httpClient.get<Movie[]>(`${this.nodeUrl}/movies/${count}`);
+        return this.httpClient.get<Movie[]>(`${this.nodeUrl}/movies/${count}`);
     }
 
+    /**
+     * Obtiene el listado de categorías desde el backend Node.js.
+     *
+     * @remarks
+     * Realiza una petición HTTP GET al endpoint
+     * `/categories/{count}`.
+     *
+     * @param count - Cantidad de categorías a solicitar
+     * @returns Observable que emite un arreglo de {@link Category}
+     *
+     * @example
+     * ```ts
+     * this.dataService.getAllCategoriesNode(5).subscribe(categories => {
+     *   console.log(categories);
+     * });
+     * ```
+     */
     getAllCategoriesNode(count: number): Observable<Category[]> {
-    return this.httpClient.get<Category[]>(`${this.nodeUrl}/categories/${count}`);
+        return this.httpClient.get<Category[]>(`${this.nodeUrl}/categories/${count}`);
     }
-
 }
