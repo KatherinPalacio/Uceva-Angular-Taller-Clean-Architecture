@@ -199,4 +199,20 @@ export class DataService {
         return this.httpClient.get<Product[]>(`${this.springBootUrl}/products/${countProducts}`);
     }
 
+        getAllMoviesSpringBoot(count: number): Observable<any[]> {
+    return this.httpClient.get<any[]>(`${this.springBootUrl}/movies/${count}`);
+    }
+
+    getAllCategoriesSpringBoot(count: number): Observable<any[]> {
+        return this.httpClient.get<any[]>(`${this.springBootUrl}/categories/${count}`);
+    }
+
+    getAllMoviesNode(count: number): Observable<any[]> {
+        return this.httpClient.get<any[]>(`${this.nodeUrl}/movies/${count}`);
+    }
+
+    getAllCategoriesNode(count: number): Observable<any[]> {
+        return this.httpClient.get<any[]>(`${this.nodeUrl}/categories/${count}`);
+    }
+
 }

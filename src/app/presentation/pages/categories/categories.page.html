@@ -1,0 +1,8 @@
+<section class="container mt-4">
+  <h2 class="mb-3">Categorías</h2>
+
+   @if (categories$ | async; as categories) {
+    <app-categories-table [categories]="categories" />
+  }
+
+</section>
